@@ -1,0 +1,10 @@
+.errorBtn {
+  margin: 10px 0;
+  padding: 10px 0;
+  width: 100%;
+  background: rgb(220, 11, 11);
+  color: #ffffff;
+  height: 40px;
+  border: none;
+  cursor: pointer;
+}
