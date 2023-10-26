@@ -9,6 +9,7 @@ export interface Person {
 export interface SearchProps {
   sendQuery(value: string): void;
   disabled: boolean;
+  value: string;
 }
 
 export interface SearchState {

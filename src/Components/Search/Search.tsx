@@ -11,6 +11,12 @@ export class Search extends React.Component<SearchProps> {
     searchValue: '',
   };
 
+  componentDidMount(): void {
+    if (this.props.value) {
+      this.setState({ searchValue: this.props.value });
+    }
+  }
+
   render() {
     return (
       <div className={classes.search}>

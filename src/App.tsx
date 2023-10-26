@@ -6,29 +6,33 @@ import DataviewItem from './Components/DataviewItem/DataviewItem';
 import { AppState, Person } from './types/types';
 
 class App extends React.Component {
-  // constructor(props) {
-  //     super(props);
-  //     // this.state = {
-  //     //     data: []
-  //     // }
-  // }
-
   state: AppState = {
     data: [],
     isLoading: false,
   };
 
+  componentDidMount(): void {
+    const savedSearchValue: string | null = localStorage.getItem('searchValue');
+    this.sendSearchQuery(savedSearchValue ? savedSearchValue : '');
+  }
+
   sendSearchQuery = (value: string) => {
     this.setState({ isLoading: true });
+    localStorage.setItem('searchValue', value);
+
     fetch(value ? `${apiUrl}/?search=${value}` : `${apiUrl}`)
       .then((res) => res.json())
       .then((res) => {
         this.setState({
           data: res.results,
+        });
+      })
+      .catch((error) => console.log(error))
+      .finally(() => {
+        this.setState({
           isLoading: false,
         });
       });
-    window.localStorage;
   };
 
   render() {
@@ -45,6 +49,7 @@ class App extends React.Component {
         <Search
           sendQuery={this.sendSearchQuery}
           disabled={this.state.isLoading}
+          value={localStorage.getItem('searchValue') || ''}
         />
         <hr />
         {this.state.isLoading ? (
