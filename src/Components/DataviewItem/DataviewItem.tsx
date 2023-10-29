@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './Dataview.module.css';
-import { Person } from '../../types/types';
+import { Person } from './types';
 
 export class DataviewItem extends React.Component<Person> {
   constructor(props: Person) {

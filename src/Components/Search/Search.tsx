@@ -1,12 +1,9 @@
 import React from 'react';
 import classes from './Search.module.css';
-import { SearchProps, SearchState } from '../../types/types';
+import { SearchProps, SearchState } from './types';
+import { apiUrl } from '../../constants/api';
 
 export class Search extends React.Component<SearchProps> {
-  constructor(props: SearchProps) {
-    super(props);
-  }
-
   state: SearchState = {
     searchValue: '',
   };
@@ -15,7 +12,23 @@ export class Search extends React.Component<SearchProps> {
     if (this.props.value) {
       this.setState({ searchValue: this.props.value });
     }
+    const savedSearchValue: string | null = localStorage.getItem('searchValue');
+    this.sendSearchQuery(savedSearchValue ? savedSearchValue : '');
   }
+
+  sendSearchQuery = (value: string) => {
+    this.props.updateLoadingStatus(true);
+    localStorage.setItem('searchValue', value);
+    fetch(value ? `${apiUrl}/?search=${value}` : `${apiUrl}`)
+      .then((res) => res.json())
+      .then((res) => {
+        this.props.updateData(res.results);
+      })
+      .catch((error) => console.log(error))
+      .finally(() => {
+        this.props.updateLoadingStatus(false);
+      });
+  };
 
   render() {
     return (
@@ -29,7 +42,7 @@ export class Search extends React.Component<SearchProps> {
         />
         <button
           className={classes.search__btn}
-          onClick={() => this.props.sendQuery(this.state.searchValue)}
+          onClick={() => this.sendSearchQuery(this.state.searchValue)}
           disabled={this.props.disabled}
         >
           Search
