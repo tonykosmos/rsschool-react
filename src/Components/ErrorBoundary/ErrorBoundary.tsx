@@ -28,7 +28,7 @@ export class ErrorBoundary extends React.Component<
 
   render() {
     if (this.state.hasError) {
-      return <h2>Get an error during app render</h2>;
+      return <h2>Something went wrong, please reload the page</h2>;
     }
 
     return this.props.children;
