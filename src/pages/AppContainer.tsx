@@ -38,7 +38,7 @@ class AppContainer extends React.Component {
   render() {
     const loadSpinner = (
       <img
-        src="../assets/load-spinner.svg"
+        src="./src/assets/load-spinner.svg"
         width="50"
         height="50"
         alt="spinner"
