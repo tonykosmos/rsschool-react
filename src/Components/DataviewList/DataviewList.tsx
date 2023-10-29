@@ -1,6 +1,7 @@
 import React from 'react';
 import DataviewItem from '../DataviewItem/DataviewItem';
-import { DataviewListProps, Person } from '../../types/types';
+import { DataviewListProps } from './types';
+import { Person } from '../DataviewItem/types';
 
 class DataviewList extends React.Component<DataviewListProps> {
   constructor(props: DataviewListProps) {
