@@ -1,7 +1,5 @@
-import { Person } from '../DataviewItem/types';
-
 export interface SearchProps {
-  updateData(data: Person[]): void;
+  updateData(value: string, apiUrl: string): void;
   updateLoadingStatus(status: boolean): void;
   disabled: boolean;
   value: string;

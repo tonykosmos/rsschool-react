@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import classes from './ErrorButton.module.css';
 
 function ErrorButton() {
-  const [hasError, setHasError] = useState(false);
+  const [hasError, setHasError] = useState<boolean>(false);
 
   useEffect(() => {
     if (hasError) {

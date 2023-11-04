@@ -4,7 +4,7 @@ import { SearchProps } from './types';
 import { apiUrl } from '../../constants/api';
 
 function Search(props: SearchProps) {
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState<string>('');
 
   useEffect(() => {
     const savedSearchValue: string | null = localStorage.getItem('searchValue');
@@ -12,22 +12,8 @@ function Search(props: SearchProps) {
       setSearchValue(savedSearchValue);
     }
 
-    sendSearchQuery(savedSearchValue || '');
+    props.updateData(savedSearchValue || '', apiUrl);
   }, []);
-
-  function sendSearchQuery(value: string) {
-    props.updateLoadingStatus(true);
-    localStorage.setItem('searchValue', value);
-    fetch(value ? `${apiUrl}/?search=${value}` : `${apiUrl}`)
-      .then((res) => res.json())
-      .then((res) => {
-        props.updateData(res.results);
-      })
-      .catch((error) => console.log(error))
-      .finally(() => {
-        props.updateLoadingStatus(false);
-      });
-  }
 
   return (
     <div className={classes.search}>
@@ -40,7 +26,7 @@ function Search(props: SearchProps) {
       />
       <button
         className={classes.search__btn}
-        onClick={() => sendSearchQuery(searchValue)}
+        onClick={() => props.updateData(searchValue, apiUrl)}
         disabled={props.disabled}
       >
         Search

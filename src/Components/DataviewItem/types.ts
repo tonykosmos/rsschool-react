@@ -5,3 +5,10 @@ export interface Person {
   birth_year: string;
   hair_color: string;
 }
+
+export interface ApiResponse {
+  count: number;
+  previous?: string;
+  next?: string;
+  results: Person[];
+}
