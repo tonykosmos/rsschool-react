@@ -6,7 +6,7 @@
 
 #root {
   display: flex;
-  margin-left: 20px;
+  justify-content: center;
 }
 
 .App {

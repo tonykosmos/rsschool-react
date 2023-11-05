@@ -11,19 +11,19 @@
   
   .detailsBtn {
     height: 40px;
-    width: 70px;
+    width: 60px;
     cursor: pointer;
     color: #fff;
-    background: teal;
+    background: #f40101;
     border-radius: 4px;
     border: none;
   }
   
   .detailsBtn:hover {
-    background: rgb(0, 82, 82);
+    background: #b50000;
   }
   
   .detailsBtn:active {
-    background: rgb(0, 62, 62);
+    background: #8a0202;
   }
   

@@ -46,12 +46,14 @@ const Pagination = (props: PaginationProps) => {
         &lt;
       </button>
       <div>
-        {currentPage}/{Math.ceil(props.pageCount / 10)}
+        {currentPage}/{Math.ceil(props.pageCount / props.itemsPerPage)}
       </div>
       <button
         className={classes.paginationBtn}
         onClick={setNextPage}
-        disabled={currentPage === Math.ceil(props.pageCount / 10)}
+        disabled={
+          currentPage === Math.ceil(props.pageCount / props.itemsPerPage)
+        }
       >
         &gt;
       </button>

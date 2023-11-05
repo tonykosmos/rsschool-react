@@ -1,0 +1,15 @@
+.itemsPerPageSelect {
+    margin: 10px 0;
+    width: 60px;
+    height: 30px;
+}
+
+.flexContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.detailsPage {
+    margin-top: 70px;
+    width: 300px;
+}
