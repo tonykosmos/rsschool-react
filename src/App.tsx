@@ -1,8 +1,14 @@
+import { BrowserRouter } from 'react-router-dom';
 import AppContainer from './pages/AppContainer';
-import { Routes, Route, Outlet } from 'react-router-dom';
 
 function App() {
-  return <AppContainer />;
+  return (
+    <>
+      <BrowserRouter>
+        <AppContainer />
+      </BrowserRouter>
+    </>
+  );
 }
 
 export default App;

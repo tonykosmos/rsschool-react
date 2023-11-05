@@ -6,7 +6,8 @@ import ErrorButton from '../Components/ErrorButton/ErrorButton';
 import DataviewList from '../Components/DataviewList/DataviewList';
 import { ApiResponse, Person } from '../Components/DataviewItem/types';
 import Pagination from '../Components/Pagination/Pagination';
-import { apiUrl } from '../constants/api';
+import { Routes, Route, Outlet } from 'react-router-dom';
+import ItemDetails from '../Components/ItemDetails/ItemDetails';
 
 function AppContainer() {
   const [responseData, setResponseData] = useState<ApiResponse>();
@@ -25,12 +26,9 @@ function AppContainer() {
   }
 
   function sendSearchQuery(value: string, url?: string) {
-    if (!url) {
-      url === apiUrl;
-    }
     updateLoadingStatus(true);
     localStorage.setItem('searchValue', value);
-    fetch(value ? `${url}/?search=${value}` : `${url}`)
+    fetch(`${url}`)
       .then((res) => res.json())
       .then((res) => {
         updateData(res);
@@ -57,32 +55,50 @@ function AppContainer() {
   return (
     <ErrorBoundary>
       <div className="App">
-        <Search
-          updateData={sendSearchQuery}
-          updateLoadingStatus={updateLoadingStatus}
-          disabled={isLoading}
-          value={localStorage.getItem('searchValue') || ''}
-        />
-        <ErrorButton />
-        <hr />
-        {isLoading ? (
-          <div className="loadSpinner">{loadSpinner}</div>
-        ) : (
-          <div className="dataview-container">
-            {data.length ? (
-              <DataviewList data={data} />
-            ) : (
-              <h2 className="">There is no results for this search</h2>
-            )}
-          </div>
-        )}
-        <Pagination
-          pageCount={pageCount}
-          changePage={changePage}
-          previousPage={responseData?.previous}
-          nextPage={responseData?.next}
-          hidden={isLoading}
-        />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <div className="flex-container">
+                <div className="content-container">
+                  <Search
+                    updateData={sendSearchQuery}
+                    updateLoadingStatus={updateLoadingStatus}
+                    disabled={isLoading}
+                    value={localStorage.getItem('searchValue') || ''}
+                  />
+                  <ErrorButton />
+                  <hr />
+                  {isLoading ? (
+                    <div className="loadSpinner">{loadSpinner}</div>
+                  ) : (
+                    <div className="dataview-container">
+                      {data?.length ? (
+                        <DataviewList data={data} />
+                      ) : (
+                        <h2 className="">
+                          There is no results for this search
+                        </h2>
+                      )}
+                    </div>
+                  )}
+                  <Pagination
+                    pageCount={pageCount}
+                    changePage={changePage}
+                    previousPage={responseData?.previous}
+                    nextPage={responseData?.next}
+                    hidden={isLoading || !Boolean(data?.length)}
+                  />
+                </div>
+                <div>
+                  <Outlet />
+                </div>
+              </div>
+            }
+          >
+            <Route path="/details" element={<ItemDetails />} />
+          </Route>
+        </Routes>
       </div>
     </ErrorBoundary>
   );

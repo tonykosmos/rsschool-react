@@ -6,10 +6,18 @@
 
 #root {
   display: flex;
-  justify-content: center;
+  margin-left: 20px;
 }
 
 .App {
+  width: 800px;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.content-container {
   width: 800px;
 }
 

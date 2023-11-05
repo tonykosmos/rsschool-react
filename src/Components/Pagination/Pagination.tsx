@@ -1,18 +1,36 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import classes from './Pagination.module.css';
 import { PaginationProps } from './types';
+import { useSearchParams } from 'react-router-dom';
 
 const Pagination = (props: PaginationProps) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.get('page')) {
+      setCurrentPage(Number(searchParams.get('page')));
+    } else {
+      setCurrentPage(1);
+    }
+  }, [searchParams]);
 
   function setNextPage() {
     setCurrentPage(currentPage + 1);
     props.changePage(props.nextPage);
+    setSearchParams({
+      search: localStorage.getItem('searchValue') || '',
+      page: (currentPage + 1).toString(),
+    });
   }
 
   function setPreviousPage() {
     setCurrentPage(currentPage - 1);
     props.changePage(props.previousPage);
+    setSearchParams({
+      search: localStorage.getItem('searchValue') || '',
+      page: (currentPage - 1).toString(),
+    });
   }
 
   return (
