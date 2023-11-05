@@ -1,0 +1,17 @@
+.search__input {
+  padding: 5px 15px;
+  width: 77%;
+  height: 30px;
+}
+
+.search__btn {
+  height: 30px;
+  width: 20%;
+  cursor: pointer;
+}
+
+.search {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}

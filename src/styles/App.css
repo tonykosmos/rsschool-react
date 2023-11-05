@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+}
+
+.App {
+  width: 800px;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.content-container {
+  width: 800px;
+}
+
+hr {
+  margin: 20px 0;
+}
+
+.dataview-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.loadSpinner {
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,28 @@
+.dataviewItem {
+  border: 1px solid teal;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.dataviewItem p {
+  font-size: 20px;
+}
+
+.detailsBtn {
+  height: 40px;
+  width: 60px;
+  cursor: pointer;
+  color: #fff;
+  background: #f40101;
+  border-radius: 4px;
+  border: none;
+}
+
+.detailsBtn:hover {
+  background: #b50000;
+}
+
+.detailsBtn:active {
+  background: #8a0202;
+}
