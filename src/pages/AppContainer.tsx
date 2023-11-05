@@ -17,7 +17,6 @@ function AppContainer() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isDetailsLoading, setIsDetailsLoading] = useState<boolean>(false);
   const [pageCount, setPageCount] = useState<number>(0);
-  const [itemsPerPage, setItemsNumPerPage] = useState<number>(10);
   const [detailsData, setDetailsData] = useState<Person | null>(null);
 
   function updateData(newData: ApiResponse) {
@@ -46,10 +45,6 @@ function AppContainer() {
 
   function changePage(url: string) {
     sendSearchQuery(localStorage.getItem('searchValue') || '', url);
-  }
-
-  function changeItemsPerPage(value: number) {
-    setItemsNumPerPage(value);
   }
 
   function sendDetailsQuery(url?: string) {
@@ -97,10 +92,7 @@ function AppContainer() {
                     <div className="dataview-container">
                       {data?.length ? (
                         <Context.Provider value={sendDetailsQuery}>
-                          <DataviewList
-                            data={data}
-                            changeItemsPerPage={changeItemsPerPage}
-                          />
+                          <DataviewList data={data} />
                         </Context.Provider>
                       ) : (
                         <h2 className="">
@@ -111,7 +103,6 @@ function AppContainer() {
                   )}
                   <Pagination
                     pageCount={pageCount}
-                    itemsPerPage={itemsPerPage}
                     changePage={changePage}
                     previousPage={responseData?.previous}
                     nextPage={responseData?.next}
