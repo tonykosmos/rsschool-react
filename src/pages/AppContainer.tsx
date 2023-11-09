@@ -7,7 +7,7 @@ import { ApiResponse, Person } from '../Components/DataviewItem/types';
 import Pagination from '../Components/Pagination/Pagination';
 import { Routes, Route } from 'react-router-dom';
 import ItemDetails from '../Components/ItemDetails/ItemDetails';
-import { Context } from '../Components/context/context';
+import { Context } from '../context/context';
 import { LoadSpinner } from '../Components/LoadSpinner/LoadSpinner';
 
 function AppContainer() {

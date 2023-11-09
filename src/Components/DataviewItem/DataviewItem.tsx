@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import classes from './Dataview.module.css';
 import { Person } from './types';
 import { useContext } from 'react';
-import { Context } from '../context/context';
+import { Context } from '../../context/context';
 
 function DataviewItem(props: Person) {
   const sendDetailsQuery = useContext(Context);
