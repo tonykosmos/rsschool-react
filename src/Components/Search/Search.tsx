@@ -11,12 +11,9 @@ function Search(props: SearchProps) {
   useEffect(() => {
     const urlSearchParam = searchParams.get('search');
     const pageSearchParam = searchParams.get('page');
-    if (urlSearchParam) {
-      localStorage.setItem('searchValue', urlSearchParam);
-    }
-    const savedSearchValue: string = localStorage.getItem('searchValue') || '';
+    const savedSearchValue: string =
+      urlSearchParam || localStorage.getItem('searchValue') || '';
     setSearchValue(savedSearchValue);
-    // setSearchParams({ search: savedSearchValue });
 
     if (pageSearchParam) {
       props.updateData(

@@ -1,17 +1,9 @@
 import { Link } from 'react-router-dom';
 import classes from './ItemDetails.module.css';
 import { ItemDetailsProps } from './types';
+import { LoadSpinner } from '../LoadSpinner/LoadSpinner';
 
 function ItemDetails(props: ItemDetailsProps) {
-  const loadSpinner = (
-    <img
-      src="../../../assets/load-spinner.svg"
-      width="50"
-      height="50"
-      alt="spinner"
-    />
-  );
-
   return (
     <div className={classes.dataviewItem}>
       {!props.isDetailsLoading ? (
@@ -32,7 +24,7 @@ function ItemDetails(props: ItemDetailsProps) {
           <h3>No data</h3>
         )
       ) : (
-        loadSpinner
+        <LoadSpinner />
       )}
       <Link to="/">
         <button className={classes.detailsBtn}>Close</button>
