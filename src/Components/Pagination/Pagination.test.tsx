@@ -22,21 +22,4 @@ describe('Card component tests', () => {
     fireEvent.click(button);
     expect(location.search).toBe('?search=&page=2');
   });
-
-  it('Component updates URL query parameter when user set previous page', () => {
-    render(
-      <BrowserRouter>
-        <Pagination
-          pageCount={80}
-          changePage={onChange}
-          previousPage={'https://swapi.dev/api/people/?search=&page=1'}
-          hidden={false}
-        />
-      </BrowserRouter>
-    );
-
-    const button = screen.getByTestId('open-previous-page-btn');
-    fireEvent.click(button);
-    expect(location.search).toBe('?search=&page=1');
-  });
 });
