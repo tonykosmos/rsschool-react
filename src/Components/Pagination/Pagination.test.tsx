@@ -1,13 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, it, vi } from 'vitest';
 import Pagination from './Pagination';
-import { Context } from '../../context/context';
-import {
-  mockDataviewListData,
-  mockDetailsData,
-  mockSearchString,
-} from '../../mocks/mockData';
-import { BrowserRouter, useSearchParams } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 const onChange = vi.fn();
 
