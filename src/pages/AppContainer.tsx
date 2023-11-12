@@ -10,6 +10,7 @@ import ItemDetails from '../Components/ItemDetails/ItemDetails';
 import { Context } from '../context/context';
 import { LoadSpinner } from '../Components/LoadSpinner/LoadSpinner';
 import { ReactContext } from '../context/types';
+import ErrorPage404 from '../Components/ErrorPage404/ErrorPage404';
 
 function AppContainer() {
   const [responseData, setResponseData] = useState<ApiResponse>();
@@ -110,6 +111,7 @@ function AppContainer() {
               element={<ItemDetails isDetailsLoading={isDetailsLoading} />}
             />
           </Route>
+          <Route path="/*" element={<ErrorPage404 />}></Route>
         </Routes>
       </div>
     </Context.Provider>

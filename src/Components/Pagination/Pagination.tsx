@@ -39,6 +39,7 @@ const Pagination = (props: PaginationProps) => {
       style={props.hidden ? { display: 'none' } : {}}
     >
       <button
+        data-testid="open-previous-page-btn"
         className={classes.paginationBtn}
         onClick={setPreviousPage}
         disabled={currentPage === 1}
