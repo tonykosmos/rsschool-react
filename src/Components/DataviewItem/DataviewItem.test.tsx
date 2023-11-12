@@ -12,7 +12,7 @@ import { BrowserRouter } from 'react-router-dom';
 const onChange = vi.fn();
 const onDetailsOpen = vi.fn();
 
-describe('DataviewList tests', () => {
+describe('Card component tests', () => {
   it('Renders the relevant card data', () => {
     render(
       <BrowserRouter>

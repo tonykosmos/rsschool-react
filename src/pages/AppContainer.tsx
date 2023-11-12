@@ -107,12 +107,7 @@ function AppContainer() {
           >
             <Route
               path="/details"
-              element={
-                <ItemDetails
-                  data={detailsData}
-                  isDetailsLoading={isDetailsLoading}
-                />
-              }
+              element={<ItemDetails isDetailsLoading={isDetailsLoading} />}
             />
           </Route>
         </Routes>

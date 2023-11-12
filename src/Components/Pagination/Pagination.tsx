@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import classes from './Pagination.module.css';
 import { PaginationProps } from './types';
 import { useSearchParams } from 'react-router-dom';
+import { Context } from '../../context/context';
 
 const Pagination = (props: PaginationProps) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -49,6 +50,7 @@ const Pagination = (props: PaginationProps) => {
         {currentPage}/{Math.ceil(props.pageCount / 10)}
       </div>
       <button
+        data-testid="open-next-page-btn"
         className={classes.paginationBtn}
         onClick={setNextPage}
         disabled={currentPage === Math.ceil(props.pageCount / 10)}

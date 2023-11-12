@@ -31,7 +31,9 @@ function ItemDetails(props: ItemDetailsProps) {
         <LoadSpinner />
       )}
       <Link to="/">
-        <button className={classes.detailsBtn}>Close</button>
+        <button data-testid="details-close-btn" className={classes.detailsBtn}>
+          Close
+        </button>
       </Link>
     </div>
   );

@@ -5,6 +5,7 @@ export const LoadSpinner = () => {
       width="50"
       height="50"
       alt="spinner"
+      data-testid="load-spinner"
     />
   );
 };
