@@ -39,6 +39,7 @@ const Pagination = (props: PaginationProps) => {
       style={props.hidden ? { display: 'none' } : {}}
     >
       <button
+        data-testid="open-previous-page-btn"
         className={classes.paginationBtn}
         onClick={setPreviousPage}
         disabled={currentPage === 1}
@@ -49,6 +50,7 @@ const Pagination = (props: PaginationProps) => {
         {currentPage}/{Math.ceil(props.pageCount / 10)}
       </div>
       <button
+        data-testid="open-next-page-btn"
         className={classes.paginationBtn}
         onClick={setNextPage}
         disabled={currentPage === Math.ceil(props.pageCount / 10)}

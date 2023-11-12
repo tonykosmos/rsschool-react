@@ -2,12 +2,13 @@ import { Link } from 'react-router-dom';
 import classes from './Dataview.module.css';
 import { Person } from './types';
 import { useContext } from 'react';
-import { Context } from '../../pages/AppContainer';
+import { Context } from '../../context/context';
 
 function DataviewItem(props: Person) {
-  const sendDetailsQuery = useContext(Context);
+  const { getDetailsData } = useContext(Context);
+
   return (
-    <div className={classes.dataviewItem}>
+    <div className={classes.dataviewItem} data-testid="dataview-item">
       <div>
         <h2>{`Name: ${props.name}`}</h2>
         <p>{`Height: ${props.height}`}</p>
@@ -17,9 +18,10 @@ function DataviewItem(props: Person) {
       </div>
       <Link to="/details">
         <button
+          data-testid="open-details-btn"
           className={classes.detailsBtn}
           onClick={() => {
-            sendDetailsQuery(props.url);
+            getDetailsData(props.url || '');
           }}
         >
           Details

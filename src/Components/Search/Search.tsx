@@ -1,22 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import classes from './Search.module.css';
 import { SearchProps } from './types';
 import { apiUrl } from '../../constants/api';
 import { useSearchParams } from 'react-router-dom';
+import { Context } from '../../context/context';
 
 function Search(props: SearchProps) {
-  const [searchValue, setSearchValue] = useState<string>('');
   const [searchParams, setSearchParams] = useSearchParams();
+  const { searchValue, getSearchValue } = useContext(Context);
 
   useEffect(() => {
     const urlSearchParam = searchParams.get('search');
     const pageSearchParam = searchParams.get('page');
-    if (urlSearchParam) {
-      localStorage.setItem('searchValue', urlSearchParam);
-    }
-    const savedSearchValue: string = localStorage.getItem('searchValue') || '';
-    setSearchValue(savedSearchValue);
-    // setSearchParams({ search: savedSearchValue });
+    const savedSearchValue: string =
+      urlSearchParam || localStorage.getItem('searchValue') || '';
+    getSearchValue(savedSearchValue);
 
     if (pageSearchParam) {
       props.updateData(
@@ -42,13 +40,15 @@ function Search(props: SearchProps) {
   return (
     <div className={classes.search}>
       <input
+        data-testid="search-input"
         type="text"
         placeholder="Search..."
         value={searchValue}
         className={classes.search__input}
-        onChange={(e) => setSearchValue(e.target.value)}
+        onChange={(e) => getSearchValue(e.target.value)}
       />
       <button
+        data-testid="search-btn"
         className={classes.search__btn}
         onClick={() => searchData(searchValue)}
         disabled={props.disabled}

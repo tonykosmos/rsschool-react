@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Search from '../Components/Search/Search';
 import '../styles/App.css';
-import ErrorBoundary from '../Components/ErrorBoundary/ErrorBoundary';
 import ErrorButton from '../Components/ErrorButton/ErrorButton';
 import DataviewList from '../Components/DataviewList/DataviewList';
 import { ApiResponse, Person } from '../Components/DataviewItem/types';
 import Pagination from '../Components/Pagination/Pagination';
 import { Routes, Route } from 'react-router-dom';
 import ItemDetails from '../Components/ItemDetails/ItemDetails';
-
-export const Context = React.createContext({} as { (url?: string): void });
+import { Context } from '../context/context';
+import { LoadSpinner } from '../Components/LoadSpinner/LoadSpinner';
+import { ReactContext } from '../context/types';
+import ErrorPage404 from '../Components/ErrorPage404/ErrorPage404';
 
 function AppContainer() {
   const [responseData, setResponseData] = useState<ApiResponse>();
@@ -18,6 +19,7 @@ function AppContainer() {
   const [isDetailsLoading, setIsDetailsLoading] = useState<boolean>(false);
   const [pageCount, setPageCount] = useState<number>(0);
   const [detailsData, setDetailsData] = useState<Person | null>(null);
+  const [searchValue, setSearchValue] = useState<string>('');
 
   function updateData(newData: ApiResponse) {
     setData(newData.results);
@@ -60,17 +62,16 @@ function AppContainer() {
       });
   }
 
-  const loadSpinner = (
-    <img
-      src="../assets/load-spinner.svg"
-      width="50"
-      height="50"
-      alt="spinner"
-    />
-  );
+  const contextValue: ReactContext = {
+    searchValue,
+    getSearchValue: setSearchValue,
+    detailsData,
+    data,
+    getDetailsData: sendDetailsQuery,
+  };
 
   return (
-    <ErrorBoundary>
+    <Context.Provider value={contextValue}>
       <div className="App">
         <Routes>
           <Route
@@ -82,23 +83,16 @@ function AppContainer() {
                     updateData={sendSearchQuery}
                     updateLoadingStatus={updateLoadingStatus}
                     disabled={isLoading}
-                    value={localStorage.getItem('searchValue') || ''}
                   />
                   <ErrorButton />
                   <hr />
                   {isLoading ? (
-                    <div className="loadSpinner">{loadSpinner}</div>
+                    <div className="loadSpinner">
+                      <LoadSpinner />
+                    </div>
                   ) : (
                     <div className="dataview-container">
-                      {data?.length ? (
-                        <Context.Provider value={sendDetailsQuery}>
-                          <DataviewList data={data} />
-                        </Context.Provider>
-                      ) : (
-                        <h2 className="">
-                          There is no results for this search
-                        </h2>
-                      )}
+                      <DataviewList />
                     </div>
                   )}
                   <Pagination
@@ -114,17 +108,13 @@ function AppContainer() {
           >
             <Route
               path="/details"
-              element={
-                <ItemDetails
-                  data={detailsData}
-                  isDetailsLoading={isDetailsLoading}
-                />
-              }
+              element={<ItemDetails isDetailsLoading={isDetailsLoading} />}
             />
           </Route>
+          <Route path="/*" element={<ErrorPage404 />}></Route>
         </Routes>
       </div>
-    </ErrorBoundary>
+    </Context.Provider>
   );
 }
 
