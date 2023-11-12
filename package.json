@@ -44,7 +44,8 @@
     "format:fix": "prettier --write .",
     "prepare": "husky install",
     "test": "vitest",
-    "coverage": "vitest run --coverage.enabled --coverage.all"
+    "coverage": "vitest run --coverage.enabled --coverage.all",
+    "test:once": "vitest --run"
   },
   "eslintConfig": {
     "extends": [

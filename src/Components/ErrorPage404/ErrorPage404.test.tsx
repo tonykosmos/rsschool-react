@@ -11,8 +11,6 @@ describe('404 page tests', () => {
       </BrowserRouter>
     );
 
-    // location.pathname = '/carrrd';
-
     const errorPage = screen.getByTestId('error-page');
 
     expect(errorPage).toBeInTheDocument();
