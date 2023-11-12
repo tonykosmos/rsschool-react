@@ -3,11 +3,7 @@ import { describe, it, vi } from 'vitest';
 import Search from './Search';
 import { BrowserRouter } from 'react-router-dom';
 import { Context } from '../../context/context';
-import {
-  mockDataviewListData,
-  mockDetailsData,
-  mockSearchString,
-} from '../../mocks/mockData';
+import { mockDataviewListData, mockDetailsData } from '../../mocks/mockData';
 import AppContainer from '../../pages/AppContainer';
 
 const onChange = vi.fn();
