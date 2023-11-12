@@ -40,6 +40,7 @@ function Search(props: SearchProps) {
   return (
     <div className={classes.search}>
       <input
+        data-testid="search-input"
         type="text"
         placeholder="Search..."
         value={searchValue}
@@ -47,6 +48,7 @@ function Search(props: SearchProps) {
         onChange={(e) => getSearchValue(e.target.value)}
       />
       <button
+        data-testid="search-btn"
         className={classes.search__btn}
         onClick={() => searchData(searchValue)}
         disabled={props.disabled}
