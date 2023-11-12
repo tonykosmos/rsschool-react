@@ -1,4 +1,4 @@
 import React from 'react';
+import { ReactContext } from './types';
 
-export const Context = React.createContext({} as { (url?: string): void });
-export const SearchContext = React.createContext({});
+export const Context = React.createContext<ReactContext>({} as ReactContext);

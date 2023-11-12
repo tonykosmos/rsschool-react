@@ -1,19 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import classes from './Search.module.css';
 import { SearchProps } from './types';
 import { apiUrl } from '../../constants/api';
 import { useSearchParams } from 'react-router-dom';
+import { Context } from '../../context/context';
 
 function Search(props: SearchProps) {
-  const [searchValue, setSearchValue] = useState<string>('');
   const [searchParams, setSearchParams] = useSearchParams();
+  const { searchValue, getSearchValue } = useContext(Context);
 
   useEffect(() => {
     const urlSearchParam = searchParams.get('search');
     const pageSearchParam = searchParams.get('page');
     const savedSearchValue: string =
       urlSearchParam || localStorage.getItem('searchValue') || '';
-    setSearchValue(savedSearchValue);
+    getSearchValue(savedSearchValue);
 
     if (pageSearchParam) {
       props.updateData(
@@ -43,7 +44,7 @@ function Search(props: SearchProps) {
         placeholder="Search..."
         value={searchValue}
         className={classes.search__input}
-        onChange={(e) => setSearchValue(e.target.value)}
+        onChange={(e) => getSearchValue(e.target.value)}
       />
       <button
         className={classes.search__btn}

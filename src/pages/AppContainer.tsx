@@ -9,6 +9,7 @@ import { Routes, Route } from 'react-router-dom';
 import ItemDetails from '../Components/ItemDetails/ItemDetails';
 import { Context } from '../context/context';
 import { LoadSpinner } from '../Components/LoadSpinner/LoadSpinner';
+import { ReactContext } from '../context/types';
 
 function AppContainer() {
   const [responseData, setResponseData] = useState<ApiResponse>();
@@ -17,6 +18,7 @@ function AppContainer() {
   const [isDetailsLoading, setIsDetailsLoading] = useState<boolean>(false);
   const [pageCount, setPageCount] = useState<number>(0);
   const [detailsData, setDetailsData] = useState<Person | null>(null);
+  const [searchValue, setSearchValue] = useState<string>('');
 
   function updateData(newData: ApiResponse) {
     setData(newData.results);
@@ -59,60 +61,63 @@ function AppContainer() {
       });
   }
 
+  const contextValue: ReactContext = {
+    searchValue,
+    getSearchValue: setSearchValue,
+    detailsData,
+    data,
+    getDetailsData: sendDetailsQuery,
+  };
+
   return (
-    <div className="App">
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <div className="flex-container">
-              <div className="content-container">
-                <Search
-                  updateData={sendSearchQuery}
-                  updateLoadingStatus={updateLoadingStatus}
-                  disabled={isLoading}
-                  value={localStorage.getItem('searchValue') || ''}
-                />
-                <ErrorButton />
-                <hr />
-                {isLoading ? (
-                  <div className="loadSpinner">
-                    <LoadSpinner />
-                  </div>
-                ) : (
-                  <div className="dataview-container">
-                    {data?.length ? (
-                      <Context.Provider value={sendDetailsQuery}>
-                        <DataviewList data={data} />
-                      </Context.Provider>
-                    ) : (
-                      <h2 className="">There is no results for this search</h2>
-                    )}
-                  </div>
-                )}
-                <Pagination
-                  pageCount={pageCount}
-                  changePage={changePage}
-                  previousPage={responseData?.previous}
-                  nextPage={responseData?.next}
-                  hidden={isLoading || !Boolean(data?.length)}
-                />
-              </div>
-            </div>
-          }
-        >
+    <Context.Provider value={contextValue}>
+      <div className="App">
+        <Routes>
           <Route
-            path="/details"
+            path="/"
             element={
-              <ItemDetails
-                data={detailsData}
-                isDetailsLoading={isDetailsLoading}
-              />
+              <div className="flex-container">
+                <div className="content-container">
+                  <Search
+                    updateData={sendSearchQuery}
+                    updateLoadingStatus={updateLoadingStatus}
+                    disabled={isLoading}
+                  />
+                  <ErrorButton />
+                  <hr />
+                  {isLoading ? (
+                    <div className="loadSpinner">
+                      <LoadSpinner />
+                    </div>
+                  ) : (
+                    <div className="dataview-container">
+                      <DataviewList />
+                    </div>
+                  )}
+                  <Pagination
+                    pageCount={pageCount}
+                    changePage={changePage}
+                    previousPage={responseData?.previous}
+                    nextPage={responseData?.next}
+                    hidden={isLoading || !Boolean(data?.length)}
+                  />
+                </div>
+              </div>
             }
-          />
-        </Route>
-      </Routes>
-    </div>
+          >
+            <Route
+              path="/details"
+              element={
+                <ItemDetails
+                  data={detailsData}
+                  isDetailsLoading={isDetailsLoading}
+                />
+              }
+            />
+          </Route>
+        </Routes>
+      </div>
+    </Context.Provider>
   );
 }
 
