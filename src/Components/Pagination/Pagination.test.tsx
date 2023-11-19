@@ -1,20 +1,20 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { describe, it, vi } from 'vitest';
+import { describe, it } from 'vitest';
 import Pagination from './Pagination';
 import { BrowserRouter } from 'react-router-dom';
-
-const onChange = vi.fn();
+import { Provider } from 'react-redux';
+import { store } from '../../store';
 
 describe('Card component tests', () => {
   it('Component updates URL query parameter when page changes', () => {
     render(
       <BrowserRouter>
-        <Pagination
-          pageCount={80}
-          changePage={onChange}
-          nextPage={'https://swapi.dev/api/people/?search=&page=2'}
-          hidden={false}
-        />
+        <Provider store={store}>
+          <Pagination
+            nextPage={'https://swapi.dev/api/people/?search=&page=2'}
+            hidden={false}
+          />
+        </Provider>
       </BrowserRouter>
     );
 

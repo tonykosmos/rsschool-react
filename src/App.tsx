@@ -1,15 +1,19 @@
 import { BrowserRouter } from 'react-router-dom';
 import AppContainer from './pages/AppContainer';
 import ErrorBoundary from './Components/ErrorBoundary/ErrorBoundary';
+import { Provider } from 'react-redux';
+import { store } from './store/index';
 
 function App() {
   return (
     <>
-      <ErrorBoundary>
-        <BrowserRouter>
-          <AppContainer />
-        </BrowserRouter>
-      </ErrorBoundary>
+      <Provider store={store}>
+        <ErrorBoundary>
+          <BrowserRouter>
+            <AppContainer />
+          </BrowserRouter>
+        </ErrorBoundary>
+      </Provider>
     </>
   );
 }

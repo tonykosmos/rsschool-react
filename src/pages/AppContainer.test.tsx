@@ -2,12 +2,16 @@ import { render } from '@testing-library/react';
 import { describe, it } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
 import AppContainer from './AppContainer';
+import { Provider } from 'react-redux';
+import { store } from '../store';
 
 describe('App container render test', () => {
   it('App container render', () => {
     render(
       <BrowserRouter>
-        <AppContainer />
+        <Provider store={store}>
+          <AppContainer />
+        </Provider>
       </BrowserRouter>
     );
   });

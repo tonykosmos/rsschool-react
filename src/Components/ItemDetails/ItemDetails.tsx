@@ -1,16 +1,28 @@
 import { Link } from 'react-router-dom';
 import classes from './ItemDetails.module.css';
-import { ItemDetailsProps } from './types';
 import { LoadSpinner } from '../LoadSpinner/LoadSpinner';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
+import { useGetDetailsQuery } from '../../store/cardsApi';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { setDetailsData } from '../../store/searchSlice';
 import { Context } from '../../context/context';
 
-function ItemDetails(props: ItemDetailsProps) {
-  const { detailsData } = useContext(Context);
+function ItemDetails() {
+  const { detailsId } = useContext(Context);
+  const { data, isLoading } = useGetDetailsQuery(detailsId);
+
+  const detailsData = useAppSelector((state) => state.search.detailsData);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (data) {
+      dispatch(setDetailsData(data));
+    }
+  });
 
   return (
     <div className={classes.dataviewItem}>
-      {!props.isDetailsLoading ? (
+      {!isLoading ? (
         detailsData ? (
           <div>
             <h2>{`Name: ${detailsData.name || ''}`}</h2>

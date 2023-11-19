@@ -21,7 +21,7 @@ function DataviewItem(props: Person) {
           data-testid="open-details-btn"
           className={classes.detailsBtn}
           onClick={() => {
-            getDetailsData(props.url || '');
+            getDetailsData(props.url?.slice(29) || '');
           }}
         >
           Details

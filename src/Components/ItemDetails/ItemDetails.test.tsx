@@ -1,32 +1,19 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { describe, it, vi } from 'vitest';
+import { describe, it } from 'vitest';
 import ItemDetails from './ItemDetails';
-import { Context } from '../../context/context';
-import {
-  mockDataviewListData,
-  mockDetailsData,
-  mockSearchString,
-} from '../../mocks/mockData';
-import { BrowserRouter, MemoryRouter, Route, Routes } from 'react-router-dom';
-import DataviewList from '../DataviewList/DataviewList';
-
-const onChange = vi.fn();
+import { mockDetailsData } from '../../mocks/mockData';
+import { BrowserRouter, MemoryRouter } from 'react-router-dom';
+import { store } from '../../store';
+import { Provider } from 'react-redux';
+import { setDetailsData } from '../../store/searchSlice';
 
 describe('Detailed Card tests', () => {
-  it('Loading indicator is displayed while fetching data', () => {
+  it('Should show loading indicator while fetching data', () => {
     render(
       <BrowserRouter>
-        <Context.Provider
-          value={{
-            searchValue: mockSearchString,
-            getSearchValue: onChange,
-            detailsData: mockDetailsData,
-            data: mockDataviewListData,
-            getDetailsData: onChange,
-          }}
-        >
-          <ItemDetails isDetailsLoading={true} />
-        </Context.Provider>
+        <Provider store={store}>
+          <ItemDetails />
+        </Provider>
       </BrowserRouter>
     );
 
@@ -34,49 +21,31 @@ describe('Detailed Card tests', () => {
     expect(loadSpinner).toBeInTheDocument();
   });
 
-  it('Detailed card component correctly displays the detailed card data', () => {
+  it('Detailed card component correctly displays the detailed card data', async () => {
     render(
-      <BrowserRouter>
-        <Context.Provider
-          value={{
-            searchValue: mockSearchString,
-            getSearchValue: onChange,
-            detailsData: mockDetailsData,
-            data: mockDataviewListData,
-            getDetailsData: onChange,
-          }}
-        >
-          <ItemDetails isDetailsLoading={false} />
-        </Context.Provider>
-      </BrowserRouter>
+      <MemoryRouter initialEntries={['/details']}>
+        <Provider store={store}>
+          <ItemDetails />
+        </Provider>
+      </MemoryRouter>
     );
 
-    const nameText = screen.getByText(`Name: ${mockDetailsData.name}`);
+    store.dispatch(setDetailsData(mockDetailsData));
+
+    const nameText = await screen.findByText(`Name: ${mockDetailsData.name}`);
     expect(nameText).toBeInTheDocument();
   });
 
   it('Clicking the close button hides the component', () => {
     render(
       <MemoryRouter initialEntries={['/details']}>
-        <Context.Provider
-          value={{
-            searchValue: mockSearchString,
-            getSearchValue: onChange,
-            detailsData: mockDetailsData,
-            data: mockDataviewListData,
-            getDetailsData: onChange,
-          }}
-        >
-          <Routes>
-            <Route path="/" element={<DataviewList />}></Route>
-            <Route
-              path="/details"
-              element={<ItemDetails isDetailsLoading={false} />}
-            />
-          </Routes>
-        </Context.Provider>
+        <Provider store={store}>
+          <ItemDetails />
+        </Provider>
       </MemoryRouter>
     );
+
+    store.dispatch(setDetailsData(mockDetailsData));
 
     const button = screen.getByTestId('details-close-btn');
     fireEvent.click(button);

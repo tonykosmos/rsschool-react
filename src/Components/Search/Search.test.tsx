@@ -2,8 +2,8 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, it, vi } from 'vitest';
 import Search from './Search';
 import { BrowserRouter } from 'react-router-dom';
-import { Context } from '../../context/context';
-import { mockDataviewListData, mockDetailsData } from '../../mocks/mockData';
+import { Provider } from 'react-redux';
+import { store } from '../../store';
 
 const onChange = vi.fn();
 
@@ -11,28 +11,17 @@ describe('Search component tests', () => {
   it('Clicking the Search button saves the entered value to the local storage', () => {
     render(
       <BrowserRouter>
-        <Context.Provider
-          value={{
-            searchValue: 'Luke',
-            getSearchValue: onChange,
-            detailsData: mockDetailsData,
-            data: mockDataviewListData,
-            getDetailsData: onChange,
-          }}
-        >
-          <Search
-            updateData={onChange}
-            updateLoadingStatus={onChange}
-            disabled={false}
-          />
-        </Context.Provider>
+        <Provider store={store}>
+          <Search updateLoadingStatus={onChange} disabled={false} />
+        </Provider>
       </BrowserRouter>
     );
 
     const inputButton: HTMLButtonElement = screen.getByTestId('search-btn');
-
+    const input: HTMLInputElement = screen.getByTestId('search-input');
+    input.value = 'Luke';
     fireEvent.click(inputButton);
-    expect(localStorage.getItem('searchValue')).toBe('Luke');
+    expect(localStorage.getItem('searchValue')).toBe(input.value);
   });
 
   it('Retrieves the value from the local storage upon mounting', () => {
@@ -40,21 +29,9 @@ describe('Search component tests', () => {
 
     render(
       <BrowserRouter>
-        <Context.Provider
-          value={{
-            searchValue: localStorage.getItem('searchValue') as string,
-            getSearchValue: onChange,
-            detailsData: mockDetailsData,
-            data: mockDataviewListData,
-            getDetailsData: onChange,
-          }}
-        >
-          <Search
-            updateData={onChange}
-            updateLoadingStatus={onChange}
-            disabled={false}
-          />
-        </Context.Provider>
+        <Provider store={store}>
+          <Search updateLoadingStatus={onChange} disabled={false} />
+        </Provider>
       </BrowserRouter>
     );
 
