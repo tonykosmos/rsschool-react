@@ -1,13 +1,16 @@
 import { useEffect, useContext } from 'react';
 import classes from './Search.module.css';
 import { SearchProps } from './types';
-import { apiUrl } from '../../constants/api';
 import { useSearchParams } from 'react-router-dom';
 import { Context } from '../../context/context';
+import { updateCurrentPage, updateSearchValue } from '../../store/searchSlice';
+import { useAppDispatch } from '../../store/hooks';
 
 function Search(props: SearchProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const { searchValue, getSearchValue } = useContext(Context);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const urlSearchParam = searchParams.get('search');
@@ -17,22 +20,15 @@ function Search(props: SearchProps) {
     getSearchValue(savedSearchValue);
 
     if (pageSearchParam) {
-      props.updateData(
-        savedSearchValue || '',
-        `${apiUrl}/?page=${searchParams.get('page')}&search=${savedSearchValue}`
-      );
       setSearchParams({ search: savedSearchValue, page: pageSearchParam });
     } else {
-      props.updateData(
-        savedSearchValue || '',
-        `${apiUrl}?search=${savedSearchValue}`
-      );
       setSearchParams({ search: savedSearchValue });
     }
   }, []);
 
   function searchData(searchValue: string) {
-    props.updateData(searchValue, `${apiUrl}?search=${searchValue}`);
+    dispatch(updateCurrentPage(1));
+    dispatch(updateSearchValue({ searchValue }));
     localStorage.setItem('searchValue', searchValue);
     setSearchParams({ search: searchValue });
   }

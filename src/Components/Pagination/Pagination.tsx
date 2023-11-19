@@ -1,23 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import classes from './Pagination.module.css';
 import { PaginationProps } from './types';
 import { useSearchParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { updateCurrentPage } from '../../store/searchSlice';
 
 const Pagination = (props: PaginationProps) => {
-  const [currentPage, setCurrentPage] = useState<number>(1);
   const [searchParams, setSearchParams] = useSearchParams();
+  const pageCount = useAppSelector((state) => state.search.pageCount);
+  const currentPage = useAppSelector((state) => state.search.currentPage);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (searchParams.get('page')) {
-      setCurrentPage(Number(searchParams.get('page')));
+      dispatch(updateCurrentPage(Number(searchParams.get('page'))));
     } else {
-      setCurrentPage(1);
+      dispatch(updateCurrentPage(1));
     }
-  }, [searchParams]);
+  }, [searchParams, dispatch]);
 
   function setNextPage() {
-    setCurrentPage(currentPage + 1);
-    props.changePage(props.nextPage);
+    console.log(currentPage);
+    dispatch(updateCurrentPage(currentPage + 1));
     setSearchParams({
       search: localStorage.getItem('searchValue') || '',
       page: (currentPage + 1).toString(),
@@ -25,8 +30,7 @@ const Pagination = (props: PaginationProps) => {
   }
 
   function setPreviousPage() {
-    setCurrentPage(currentPage - 1);
-    props.changePage(props.previousPage);
+    dispatch(updateCurrentPage(currentPage - 1));
     setSearchParams({
       search: localStorage.getItem('searchValue') || '',
       page: (currentPage - 1).toString(),
@@ -47,13 +51,13 @@ const Pagination = (props: PaginationProps) => {
         &lt;
       </button>
       <div>
-        {currentPage}/{Math.ceil(props.pageCount / 10)}
+        {currentPage}/{Math.ceil(pageCount / 10)}
       </div>
       <button
         data-testid="open-next-page-btn"
         className={classes.paginationBtn}
         onClick={setNextPage}
-        disabled={currentPage === Math.ceil(props.pageCount / 10)}
+        disabled={currentPage === Math.ceil(pageCount / 10)}
       >
         &gt;
       </button>

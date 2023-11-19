@@ -19,8 +19,7 @@ describe('DataviewList tests', () => {
           value={{
             searchValue: mockSearchString,
             getSearchValue: onChange,
-            detailsData: mockDetailsData,
-            data: mockDataviewListData,
+            detailsId: '1',
             getDetailsData: onChange,
           }}
         >
@@ -40,8 +39,7 @@ describe('DataviewList tests', () => {
           value={{
             searchValue: mockSearchString,
             getSearchValue: onChange,
-            detailsData: mockDetailsData,
-            data: [],
+            detailsId: '1',
             getDetailsData: onChange,
           }}
         >
