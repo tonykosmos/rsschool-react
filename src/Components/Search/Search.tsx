@@ -1,14 +1,13 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import classes from './Search.module.css';
 import { SearchProps } from './types';
 import { useSearchParams } from 'react-router-dom';
-import { Context } from '../../context/context';
 import { updateCurrentPage, updateSearchValue } from '../../store/searchSlice';
 import { useAppDispatch } from '../../store/hooks';
 
 function Search(props: SearchProps) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { searchValue, getSearchValue } = useContext(Context);
+  const [searchValue, setSearchValue] = useState('');
 
   const dispatch = useAppDispatch();
 
@@ -17,7 +16,7 @@ function Search(props: SearchProps) {
     const pageSearchParam = searchParams.get('page');
     const savedSearchValue: string =
       urlSearchParam || localStorage.getItem('searchValue') || '';
-    getSearchValue(savedSearchValue);
+    setSearchValue(savedSearchValue);
 
     if (pageSearchParam) {
       setSearchParams({ search: savedSearchValue, page: pageSearchParam });
@@ -27,9 +26,10 @@ function Search(props: SearchProps) {
   }, []);
 
   function searchData(searchValue: string) {
+    console.log(searchValue);
+    localStorage.setItem('searchValue', searchValue);
     dispatch(updateCurrentPage(1));
     dispatch(updateSearchValue({ searchValue }));
-    localStorage.setItem('searchValue', searchValue);
     setSearchParams({ search: searchValue });
   }
 
@@ -41,7 +41,7 @@ function Search(props: SearchProps) {
         placeholder="Search..."
         value={searchValue}
         className={classes.search__input}
-        onChange={(e) => getSearchValue(e.target.value)}
+        onChange={(e) => setSearchValue(e.target.value)}
       />
       <button
         data-testid="search-btn"

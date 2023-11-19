@@ -2,11 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, it, vi } from 'vitest';
 import DataviewItem from './DataviewItem';
 import { Context } from '../../context/context';
-import {
-  mockDataviewListData,
-  mockDetailsData,
-  mockSearchString,
-} from '../../mocks/mockData';
+import { mockDataviewListData, mockSearchString } from '../../mocks/mockData';
 import { BrowserRouter } from 'react-router-dom';
 
 const onChange = vi.fn();
@@ -19,9 +15,8 @@ describe('Card component tests', () => {
         <Context.Provider
           value={{
             searchValue: mockSearchString,
+            detailsId: '1',
             getSearchValue: onChange,
-            detailsData: mockDetailsData,
-            data: mockDataviewListData,
             getDetailsData: onChange,
           }}
         >
@@ -48,9 +43,8 @@ describe('Card component tests', () => {
         <Context.Provider
           value={{
             searchValue: mockSearchString,
+            detailsId: '1',
             getSearchValue: onChange,
-            detailsData: mockDetailsData,
-            data: mockDataviewListData,
             getDetailsData: onChange,
           }}
         >
@@ -78,9 +72,8 @@ describe('Card component tests', () => {
         <Context.Provider
           value={{
             searchValue: mockSearchString,
+            detailsId: '1',
             getSearchValue: onChange,
-            detailsData: mockDetailsData,
-            data: mockDataviewListData,
             getDetailsData: onDetailsOpen,
           }}
         >

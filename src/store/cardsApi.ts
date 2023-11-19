@@ -1,18 +1,3 @@
-// import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-// import { apiUrl } from '../constants/api';
-
-// export const cardsApi = createApi({
-//   reducerPath: 'cardsApi',
-//   baseQuery: fetchBaseQuery({ baseUrl: apiUrl }),
-//   endpoints: (build) => ({
-//     getCards: build.query({
-//       query: (search = '') => `${search && `?search=${search}`}`,
-//     }),
-//   }),
-// });
-
-// export const { useGetCardsQuery } = cardsApi;
-
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { apiUrl } from '../constants/api';
 import { ApiResponse, Person } from '../Components/DataviewItem/types';

@@ -13,11 +13,12 @@ function DataviewList() {
   const cardsData = useAppSelector((state) => state.search.cardsData);
   const searchValue = useAppSelector((state) => state.search.searchValue);
   const currentPage = useAppSelector((state) => state.search.currentPage);
+  const dispatch = useAppDispatch();
+
   const { data, isLoading } = useGetCardsQuery({
     searchValue: localStorage.getItem('searchValue') || '',
     page: currentPage,
   });
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (data) {

@@ -13,8 +13,7 @@ describe('404 page tests', () => {
 
     const errorPage = screen.getByTestId('error-page');
 
-
-    screen.getBy
+    screen.getBy;
     expect(errorPage).toBeInTheDocument();
   });
 });
