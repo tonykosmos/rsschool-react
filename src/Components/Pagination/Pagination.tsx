@@ -32,7 +32,7 @@ export default function Pagination() {
   return (
     <div
       className={classes.paginationContainer}
-      style={false ? { display: 'none' } : {}}
+      style={!pageCount ? { display: 'none' } : {}}
     >
       <button
         data-testid="open-previous-page-btn"

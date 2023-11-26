@@ -12,6 +12,7 @@ export default function Search() {
     store.dispatch(updateSearchValue(searchValue));
     store.dispatch(updateCurrentPage(1));
     router.push({
+      pathname: '/',
       query: { page: '1', search: searchValue },
     });
     localStorage.setItem('searchValue', searchValue);
