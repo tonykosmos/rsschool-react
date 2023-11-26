@@ -1,14 +1,8 @@
 import { ApiResponse } from '../Components/DataviewItem/types';
 import { store } from '../store';
 import { getCards } from '../store/cardsApi';
+import { queryContext } from '../types/types';
 import Layout from './layout';
-
-interface queryContext {
-  query: {
-    search: string;
-    page: string;
-  };
-}
 
 export const getServerSideProps = async (context: queryContext) => {
   const { search, page } = context.query;
