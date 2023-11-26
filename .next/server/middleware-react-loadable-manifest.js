@@ -1,1 +1,0 @@
-self.__REACT_LOADABLE_MANIFEST={"..\\..\\node_modules\\@vitest\\snapshot\\dist\\index.js -> magic-string":{id:null,files:[]}};
