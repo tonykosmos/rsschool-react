@@ -1,37 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import classes from './Search.module.css';
-import { SearchProps } from './types';
-import { useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
 import { updateCurrentPage, updateSearchValue } from '../../store/searchSlice';
-import { useAppDispatch } from '../../store/hooks';
+import { store } from '../../store';
 
-function Search(props: SearchProps) {
-  const [searchParams, setSearchParams] = useSearchParams();
+export default function Search() {
+  const router = useRouter();
   const [searchValue, setSearchValue] = useState('');
 
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const urlSearchParam = searchParams.get('search');
-    const pageSearchParam = searchParams.get('page');
-    const savedSearchValue: string =
-      urlSearchParam || localStorage.getItem('searchValue') || '';
-    setSearchValue(savedSearchValue);
-
-    if (pageSearchParam) {
-      setSearchParams({ search: savedSearchValue, page: pageSearchParam });
-    } else {
-      setSearchParams({ search: savedSearchValue });
-    }
-  }, []);
-
-  function searchData(searchValue: string) {
-    console.log(searchValue);
+  const getSearchData = () => {
+    store.dispatch(updateSearchValue(searchValue));
+    store.dispatch(updateCurrentPage(1));
+    router.push({
+      pathname: '/',
+      query: { page: '1', search: searchValue },
+    });
     localStorage.setItem('searchValue', searchValue);
-    dispatch(updateCurrentPage(1));
-    dispatch(updateSearchValue({ searchValue }));
-    setSearchParams({ search: searchValue });
-  }
+  };
 
   return (
     <div className={classes.search}>
@@ -46,13 +31,11 @@ function Search(props: SearchProps) {
       <button
         data-testid="search-btn"
         className={classes.search__btn}
-        onClick={() => searchData(searchValue)}
-        disabled={props.disabled}
+        onClick={() => getSearchData()}
+        // disabled={props.disabled}
       >
         Search
       </button>
     </div>
   );
 }
-
-export default Search;
