@@ -7,6 +7,7 @@ function DataviewItem(props: Person) {
   const router = useRouter();
   const currentPage = store.getState().search.currentPage;
   const searchValue = store.getState().search.searchValue;
+  console.log(props.url?.split('/'));
   return (
     <div className={classes.dataviewItem} data-testid="dataview-item">
       <div>
@@ -22,7 +23,7 @@ function DataviewItem(props: Person) {
         onClick={() =>
           router.push({
             pathname: `/details/${
-              props.url?.split('/')[props.url?.split('/').length - 1]
+              props.url?.split('/')[props.url?.split('/').length - 2]
             }`,
             query: { page: currentPage, search: searchValue },
           })
