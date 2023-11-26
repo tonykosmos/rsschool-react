@@ -1,52 +1,42 @@
-import { useEffect } from 'react';
-import classes from './Pagination.module.css';
-import { PaginationProps } from './types';
-import { useSearchParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useRouter } from 'next/router';
+import { store } from '../../store';
 import { updateCurrentPage } from '../../store/searchSlice';
+import classes from './Pagination.module.css';
 
-const Pagination = (props: PaginationProps) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const pageCount = useAppSelector((state) => state.search.pageCount);
-  const currentPage = useAppSelector((state) => state.search.currentPage);
+export default function Pagination() {
+  const router = useRouter();
+  const { page, search } = router.query;
+  const currentPage = (page || store.getState().search.currentPage) as number;
+  const pageCount = store.getState().search.pageCount;
 
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (searchParams.get('page')) {
-      dispatch(updateCurrentPage(Number(searchParams.get('page'))));
-    } else {
-      dispatch(updateCurrentPage(1));
-    }
-  }, [searchParams, dispatch]);
+  if (page) {
+    store.dispatch(updateCurrentPage(page));
+  }
 
   function setNextPage() {
-    console.log(currentPage);
-    dispatch(updateCurrentPage(currentPage + 1));
-    setSearchParams({
-      search: localStorage.getItem('searchValue') || '',
-      page: (currentPage + 1).toString(),
+    router.push({
+      query: { page: Number(currentPage) + 1, search },
     });
+    store.dispatch(updateCurrentPage(Number(currentPage) + 1));
   }
 
   function setPreviousPage() {
-    dispatch(updateCurrentPage(currentPage - 1));
-    setSearchParams({
-      search: localStorage.getItem('searchValue') || '',
-      page: (currentPage - 1).toString(),
+    router.push({
+      query: { page: currentPage - 1, search },
     });
+    store.dispatch(updateCurrentPage(Number(currentPage) - 1));
   }
 
   return (
     <div
       className={classes.paginationContainer}
-      style={props.hidden ? { display: 'none' } : {}}
+      style={false ? { display: 'none' } : {}}
     >
       <button
         data-testid="open-previous-page-btn"
         className={classes.paginationBtn}
         onClick={setPreviousPage}
-        disabled={currentPage === 1}
+        disabled={Number(currentPage) === 1}
       >
         &lt;
       </button>
@@ -57,12 +47,10 @@ const Pagination = (props: PaginationProps) => {
         data-testid="open-next-page-btn"
         className={classes.paginationBtn}
         onClick={setNextPage}
-        disabled={currentPage === Math.ceil(pageCount / 10)}
+        disabled={Number(currentPage) === Math.ceil(pageCount / 10)}
       >
         &gt;
       </button>
     </div>
   );
-};
-
-export default Pagination;
+}

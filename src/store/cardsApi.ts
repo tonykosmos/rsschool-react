@@ -6,7 +6,7 @@ export const cardsApi = createApi({
   reducerPath: 'cardsApi',
   baseQuery: fetchBaseQuery({ baseUrl: apiUrl }),
   endpoints: (build) => ({
-    getCards: build.query<ApiResponse, { searchValue: string; page: number }>({
+    getCards: build.query<ApiResponse, { searchValue: string; page: string }>({
       query: ({ searchValue = '', page = '1' }) => ({
         url: '',
         params: {
@@ -22,3 +22,4 @@ export const cardsApi = createApi({
 });
 
 export const { useGetCardsQuery, useGetDetailsQuery } = cardsApi;
+export const { getCards, getDetails } = cardsApi.endpoints;

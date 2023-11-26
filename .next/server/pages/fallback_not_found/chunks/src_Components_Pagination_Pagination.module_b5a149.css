@@ -1,0 +1,31 @@
+/* chunk [output]/.next/server/pages/fallback_not_found/chunks/src_Components_Pagination_Pagination.module_b5a149.css */
+/* [project]/src/Components/Pagination/Pagination.module.css (css, css module) */
+.paginationContainer__Pagination__488ebcf {
+  display: flex;
+  justify-content: center;
+  grid-gap: 15px;
+  align-items: center;
+  margin: 10px 0;
+}
+.paginationBtn__Pagination__488ebcf {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  background: teal;
+  cursor: pointer;
+}
+.paginationBtn__Pagination__488ebcf:hover {
+  background: rgb(0, 82, 82);
+}
+.paginationBtn__Pagination__488ebcf:active {
+  background: rgb(0, 62, 62);
+}
+.paginationBtn__Pagination__488ebcf[disabled] {
+  background: #9f9d9d;
+  color: #000;
+  cursor: default;
+}
+

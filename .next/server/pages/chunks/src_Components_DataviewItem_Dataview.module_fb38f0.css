@@ -1,0 +1,26 @@
+/* [project]/src/Components/DataviewItem/Dataview.module.css (css, css module) */
+.dataviewItem__Dataview__daa9d773 {
+  border: 1px solid teal;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  width: 450px;
+}
+.dataviewItem__Dataview__daa9d773 p {
+  font-size: 20px;
+}
+.detailsBtn__Dataview__daa9d773 {
+  height: 40px;
+  width: 70px;
+  cursor: pointer;
+  color: #fff;
+  background: teal;
+  border-radius: 4px;
+  border: none;
+}
+.detailsBtn__Dataview__daa9d773:hover {
+  background: rgb(0, 82, 82);
+}
+.detailsBtn__Dataview__daa9d773:active {
+  background: rgb(0, 62, 62);
+}
