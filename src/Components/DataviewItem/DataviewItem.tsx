@@ -1,10 +1,12 @@
+import { store } from '../../store';
 import classes from './Dataview.module.css';
 import { Person } from './types';
 import { useRouter } from 'next/router';
 
 function DataviewItem(props: Person) {
-  // const { getDetailsData } = useContext(Context);\
   const router = useRouter();
+  const currentPage = store.getState().search.currentPage;
+  const searchValue = store.getState().search.searchValue;
   return (
     <div className={classes.dataviewItem} data-testid="dataview-item">
       <div>
@@ -17,12 +19,12 @@ function DataviewItem(props: Person) {
       <button
         data-testid="open-details-btn"
         className={classes.detailsBtn}
-        // onClick={() => {
-        //   getDetailsData(props.url?.slice(29) || '');
-        // }}
         onClick={() =>
           router.push({
-            pathname: `/details/${props.url?.slice(29)}`,
+            pathname: `/details/${
+              props.url?.split('/')[props.url?.split('/').length - 1]
+            }`,
+            query: { page: currentPage, search: searchValue },
           })
         }
       >

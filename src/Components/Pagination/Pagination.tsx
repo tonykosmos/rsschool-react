@@ -15,6 +15,7 @@ export default function Pagination() {
 
   function setNextPage() {
     router.push({
+      pathname: '/',
       query: { page: Number(currentPage) + 1, search },
     });
     store.dispatch(updateCurrentPage(Number(currentPage) + 1));
@@ -22,6 +23,7 @@ export default function Pagination() {
 
   function setPreviousPage() {
     router.push({
+      pathname: '/',
       query: { page: currentPage - 1, search },
     });
     store.dispatch(updateCurrentPage(Number(currentPage) - 1));
