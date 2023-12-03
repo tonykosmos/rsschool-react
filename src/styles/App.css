@@ -1,0 +1,59 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+}
+
+.App {
+  width: 800px;
+}
+
+hr {
+  margin: 20px 0;
+}
+
+.dataview-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.loadSpinner {
+  display: flex;
+  justify-content: center;
+}
+
+.route-btn {
+  width: 120px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.route-btn-container {
+  margin-top: 10px;
+  width: 260px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.main-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.flex {
+  display: flex;
+}
+
+.v-center {
+  display: flex;
+  align-items: center;
+}
