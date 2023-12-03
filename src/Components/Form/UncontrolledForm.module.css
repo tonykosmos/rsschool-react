@@ -1,0 +1,35 @@
+.formInput,
+.formSelect {
+    width: 300px;
+    height: 30px;
+    font-size: 18px;
+}
+
+.formCheckbox {
+    font-size: 16px;
+    width: 19px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.formInput:focus-visible {
+    border: none;
+}
+
+.form,
+.form label {
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+}
+
+.form  {
+    margin-top: 10px;
+    gap: 15px;
+}
+
+.formBtn  {
+   height: 30px;
+   width: 100%;
+   cursor: pointer;
+}
