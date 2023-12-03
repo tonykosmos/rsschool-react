@@ -44,8 +44,7 @@ export default function UncontrolledForm() {
       image: imageFile,
     };
 
-    const isValid = validate(data);
-    if (isValid) {
+    if (validate(data)) {
       dispatch(
         updateFormData([
           ...formData,
