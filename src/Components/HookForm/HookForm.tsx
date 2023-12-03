@@ -23,16 +23,53 @@ export default function HookForm() {
   const formData = useAppSelector((store) => store.formData.formData);
 
   const [imageUrl, setImageUrl] = useState<string>('');
+  const [strengthIndicatorClass, setStrengthIndicatorClass] =
+    useState<string>('');
+  const [strengthStatus, setStrengthStatus] = useState<string>('Very weak');
 
   function onSubmit(data: FormDataType) {
+    const objToSend = {
+      name: data.name,
+      age: data.age,
+      email: data.email,
+      password: data.password,
+      confirmPassword: data.confirmPassword,
+      gender: data.gender,
+      accept: data.accept,
+      country: data.country,
+    };
     if (isValid) {
       dispatch(
         updateFormData([
           ...formData,
-          { id: new Date().toISOString(), ...data, imageUrl },
+          { id: new Date().toISOString(), ...objToSend, imageUrl },
         ])
       );
       navigate('/');
+    }
+  }
+
+  function changeStrengthIndicator(value: string) {
+    if (
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/.test(
+        value
+      )
+    ) {
+      setStrengthIndicatorClass('rgb(0, 145, 0)');
+      setStrengthStatus('Good');
+    } else if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) {
+      setStrengthIndicatorClass('orange');
+      setStrengthStatus('Middle');
+    } else if (
+      /^(?=.*[a-z])(?=.*[A-Z])/.test(value) ||
+      /^(?=.*[a-z])(?=.*\d)/.test(value) ||
+      /^(?=.*[A-Z])(?=.*\d)/.test(value)
+    ) {
+      setStrengthIndicatorClass('yellow');
+      setStrengthStatus('Weak');
+    } else {
+      setStrengthIndicatorClass('red');
+      setStrengthStatus('Very Weak');
     }
   }
 
@@ -93,12 +130,23 @@ export default function HookForm() {
         )}
       </label>
       <label htmlFor="password">
-        Password:
+        <div className={classes.spaceBetween}>
+          <div>Password</div>
+          <div className={classes.passwordStrenthBlock}>
+            Strength:
+            <div
+              className={classes.strengthIndicator}
+              style={{ background: strengthIndicatorClass }}
+            ></div>
+            <div className={classes.strengthStatus}>{strengthStatus}</div>
+          </div>
+        </div>
         <input
           type="password"
           className={classes.formInput}
           id="password"
           {...register('password')}
+          onChange={(e) => changeStrengthIndicator(e.target.value)}
         />
         {errors.password ? (
           <div className={classes.errorMessage}>{errors.password.message}</div>

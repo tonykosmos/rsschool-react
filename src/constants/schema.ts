@@ -36,7 +36,6 @@ export const schema = yup.object({
       message:
         'Incorrect file, only JPEG or PNG with size less than 1 MB can be uploaded',
       test: (value) => {
-        console.log(value);
         const image = value as File;
         return (
           image.size <= 1000000 &&

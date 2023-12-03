@@ -30,6 +30,7 @@ export default function UncontrolledForm() {
   const [imageFile, setImageFile] = useState<File>();
   const [strengthIndicatorClass, setStrengthIndicatorClass] =
     useState<string>('');
+  const [strengthStatus, setStrengthStatus] = useState<string>('Very weak');
 
   function changeStrengthIndicator(value: string) {
     if (
@@ -38,21 +39,25 @@ export default function UncontrolledForm() {
       )
     ) {
       setStrengthIndicatorClass('rgb(0, 145, 0)');
+      setStrengthStatus('Good');
     } else if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) {
-      setStrengthIndicatorClass('rgb(255, 165, 0)');
+      setStrengthIndicatorClass('orange');
+      setStrengthStatus('Middle');
     } else if (
       /^(?=.*[a-z])(?=.*[A-Z])/.test(value) ||
-      /^(?=.*[a-z])(?=.*\d)/.test(value)
+      /^(?=.*[a-z])(?=.*\d)/.test(value) ||
+      /^(?=.*[A-Z])(?=.*\d)/.test(value)
     ) {
-      setStrengthIndicatorClass('rgb(255, 255, 0)');
+      setStrengthIndicatorClass('yellow');
+      setStrengthStatus('Weak');
     } else {
-      setStrengthIndicatorClass('rgb(255, 0, 0)');
+      setStrengthIndicatorClass('red');
+      setStrengthStatus('Very Weak');
     }
   }
 
   function onSubmit(event: React.FormEvent) {
     event.preventDefault();
-    console.log(imageFile);
     const data = {
       name: nameRef.current?.value,
       age: Number(ageRef.current?.value),
@@ -66,6 +71,7 @@ export default function UncontrolledForm() {
     };
 
     if (validate(data)) {
+      delete data.image;
       dispatch(
         updateFormData([
           ...formData,
@@ -153,11 +159,12 @@ export default function UncontrolledForm() {
         <div className={classes.spaceBetween}>
           <div>Password</div>
           <div className={classes.passwordStrenthBlock}>
-            Strength:{' '}
+            Strength:
             <div
               className={classes.strengthIndicator}
               style={{ background: strengthIndicatorClass }}
             ></div>
+            <div className={classes.strengthStatus}>{strengthStatus}</div>
           </div>
         </div>
         <input

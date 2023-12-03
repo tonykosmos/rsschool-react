@@ -13,14 +13,3 @@ export interface FormDataType {
   accept?: boolean;
   country?: string;
 }
-
-export interface ValidationErrorsObj {
-  name?: string;
-  age?: string;
-  email?: string;
-  password?: string;
-  confirmPassword?: string;
-  gender?: string;
-  accept?: string;
-  country?: string;
-}
