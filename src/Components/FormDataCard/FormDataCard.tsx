@@ -11,6 +11,8 @@ const FormDataCard = (props: FormDataCardProps) => {
         <p>{`Password: ${props.password}`}</p>
         <p>{`Gender: ${props.gender}`}</p>
         <p>{`Country: ${props.country}`}</p>
+        <p>Image: </p>
+        <img src={props.imageUrl} width={100} height={80} />
       </div>
     </div>
   );

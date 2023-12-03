@@ -6,4 +6,5 @@ export interface FormDataCardProps {
   password: string;
   gender: string;
   country: string;
+  imageUrl: string;
 }

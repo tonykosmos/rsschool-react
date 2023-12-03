@@ -7,24 +7,41 @@ import { schema } from '../../constants/schema';
 import { updateFormData } from '../../store/FormSlice';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useState } from 'react';
 
 export default function HookForm() {
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
+    trigger,
+    setValue,
   } = useForm({ resolver: yupResolver(schema), mode: 'onChange' });
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const formData = useAppSelector((store) => store.formData.formData);
 
+  const [imageUrl, setImageUrl] = useState<string>('');
+
   function onSubmit(data: FormDataType) {
     if (isValid) {
       dispatch(
-        updateFormData([...formData, { id: new Date().toISOString(), ...data }])
+        updateFormData([
+          ...formData,
+          { id: new Date().toISOString(), ...data, imageUrl },
+        ])
       );
       navigate('/');
+    }
+  }
+
+  function setUploadedFile(event: React.ChangeEvent<HTMLInputElement>) {
+    if (event.target.files) {
+      const file = event.target.files[0];
+      setImageUrl(URL.createObjectURL(file));
+      setValue('image', file);
+      trigger('image');
     }
   }
 
@@ -136,6 +153,32 @@ export default function HookForm() {
         </datalist>
         {errors.country ? (
           <span className={classes.errorMessage}>{errors.country.message}</span>
+        ) : (
+          <span className={classes.errorMessage}></span>
+        )}
+      </label>
+      <label htmlFor="image">
+        Image
+        <input
+          id="image"
+          type="file"
+          {...register('image')}
+          onChange={(e) => {
+            setUploadedFile(e);
+          }}
+        />
+        {imageUrl ? (
+          <img
+            className={classes.formImage}
+            src={imageUrl}
+            alt="image"
+            {...register('image')}
+          />
+        ) : (
+          ''
+        )}
+        {errors.image ? (
+          <span className={classes.errorMessage}>{errors.image.message}</span>
         ) : (
           <span className={classes.errorMessage}></span>
         )}

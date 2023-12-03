@@ -13,7 +13,7 @@ export default function UncontrolledForm() {
   const ageRef = useRef<HTMLInputElement>(null);
   const genderRef = useRef<HTMLSelectElement>(null);
   const countryRef = useRef<HTMLInputElement>(null);
-  const pictureRef = useRef<HTMLInputElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
@@ -26,8 +26,12 @@ export default function UncontrolledForm() {
   const navigate = useNavigate();
   const formData = useAppSelector((store) => store.formData.formData);
 
-  function handleSubmit(event: React.FormEvent) {
+  const [imageUrl, setImageUrl] = useState<string>('');
+  const [imageFile, setImageFile] = useState<File>();
+
+  function onSubmit(event: React.FormEvent) {
     event.preventDefault();
+    console.log(imageFile);
     const data = {
       name: nameRef.current?.value,
       age: Number(ageRef.current?.value),
@@ -37,12 +41,16 @@ export default function UncontrolledForm() {
       gender: genderRef.current?.value,
       country: countryRef.current?.value,
       accept: acceptRef.current?.checked,
-      // picture: imageObject,
+      image: imageFile,
     };
+
     const isValid = validate(data);
     if (isValid) {
       dispatch(
-        updateFormData([...formData, { id: new Date().toISOString(), ...data }])
+        updateFormData([
+          ...formData,
+          { id: new Date().toISOString(), ...data, imageUrl },
+        ])
       );
       navigate('/');
     }
@@ -66,8 +74,16 @@ export default function UncontrolledForm() {
     }
   }
 
+  function setUploadedFile(event: React.ChangeEvent<HTMLInputElement>) {
+    if (event.target.files) {
+      const file = event.target.files[0];
+      setImageUrl(URL.createObjectURL(file));
+      setImageFile(file);
+    }
+  }
+
   return (
-    <form className={classes.form} onSubmit={handleSubmit}>
+    <form className={classes.form} onSubmit={onSubmit}>
       <Link to="/">
         <button className={classes.formBtn}>Go to main page</button>
       </Link>
@@ -193,6 +209,31 @@ export default function UncontrolledForm() {
           <span className={classes.errorMessage}>
             {validationErrors.accept}
           </span>
+        ) : (
+          <span className={classes.errorMessage}></span>
+        )}
+      </label>
+      <label htmlFor="image">
+        Image
+        <input
+          id="image"
+          type="file"
+          onChange={(e) => {
+            setUploadedFile(e);
+          }}
+        />
+        {imageUrl ? (
+          <img
+            className={classes.formImage}
+            src={imageUrl}
+            alt="image"
+            ref={imageRef}
+          />
+        ) : (
+          ''
+        )}
+        {validationErrors.image ? (
+          <span className={classes.errorMessage}>{validationErrors.image}</span>
         ) : (
           <span className={classes.errorMessage}></span>
         )}

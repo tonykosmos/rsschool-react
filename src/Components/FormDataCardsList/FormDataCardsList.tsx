@@ -17,6 +17,7 @@ const FormDataCardsList = () => {
             password={item.password}
             gender={item.gender}
             country={item.country}
+            imageUrl={item.imageUrl}
           />
         ))
       ) : (

@@ -28,4 +28,20 @@ export const schema = yup.object({
     test: (value) => value,
   }),
   country: yup.string().required('Required field'),
+  image: yup
+    .mixed()
+    .required('Required field')
+    .test({
+      name: 'image',
+      message:
+        'Incorrect file, only JPEG or PNG with size less than 1 MB can be uploaded',
+      test: (value) => {
+        console.log(value);
+        const image = value as File;
+        return (
+          image.size <= 1000000 &&
+          (image.type === 'image/jpeg' || image.type === 'image/png')
+        );
+      },
+    }),
 });

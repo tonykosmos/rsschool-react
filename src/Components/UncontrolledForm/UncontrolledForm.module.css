@@ -40,3 +40,8 @@
     color: rgb(255, 19, 19);
     height: 14px;
 }
+
+.formImage {
+    width: 100px;
+    height: 80px;
+}

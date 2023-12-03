@@ -12,6 +12,7 @@ export interface FormDataType {
   gender?: string;
   accept?: boolean;
   country?: string;
+  image?: File;
 }
 
 export interface ValidationErrorsObj {
@@ -23,4 +24,5 @@ export interface ValidationErrorsObj {
   gender?: string;
   accept?: string;
   country?: string;
+  image?: string;
 }
