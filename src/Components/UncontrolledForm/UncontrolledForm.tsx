@@ -13,7 +13,7 @@ export default function UncontrolledForm() {
   const ageRef = useRef<HTMLInputElement>(null);
   const genderRef = useRef<HTMLSelectElement>(null);
   const countryRef = useRef<HTMLInputElement>(null);
-  const imageRef = useRef<HTMLInputElement>(null);
+  const pictureRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
@@ -167,7 +167,6 @@ export default function UncontrolledForm() {
           name="country"
           id="country"
           ref={countryRef}
-          // onChange={() => handleInputChange('country')}
         />
         <datalist id="countries">
           {countriesList.map((item: CountriesListItem) => {

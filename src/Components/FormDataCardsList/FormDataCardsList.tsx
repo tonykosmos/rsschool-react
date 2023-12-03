@@ -1,12 +1,9 @@
-import { useId } from 'react';
 import { useAppSelector } from '../../store/hooks';
-import { FormDataType } from '../UncontrolledForm/types';
 import FormDataCard from '../FormDataCard/FormDataCard';
 import { FormDataCardProps } from '../FormDataCard/types';
 
 const FormDataCardsList = () => {
   const formsData = useAppSelector((store) => store.formData.formData);
-  const id = useId();
   return (
     <div>
       {formsData.length ? (

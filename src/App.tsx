@@ -4,6 +4,7 @@ import Main from './pages/Main';
 import UncontrolledForm from './Components/UncontrolledForm/UncontrolledForm';
 import { store } from './store';
 import { Provider } from 'react-redux';
+import HookForm from './Components/HookForm/HookForm';
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/uncontrolledForm" element={<UncontrolledForm />} />
-            <Route path="/reactHooksForm" element={<div>Form 2</div>} />
+            <Route path="/reactHookForm" element={<HookForm />} />
           </Routes>
         </BrowserRouter>
       </Provider>
