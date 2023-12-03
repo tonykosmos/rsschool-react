@@ -28,6 +28,27 @@ export default function UncontrolledForm() {
 
   const [imageUrl, setImageUrl] = useState<string>('');
   const [imageFile, setImageFile] = useState<File>();
+  const [strengthIndicatorClass, setStrengthIndicatorClass] =
+    useState<string>('');
+
+  function changeStrengthIndicator(value: string) {
+    if (
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/.test(
+        value
+      )
+    ) {
+      setStrengthIndicatorClass('rgb(0, 145, 0)');
+    } else if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) {
+      setStrengthIndicatorClass('rgb(255, 165, 0)');
+    } else if (
+      /^(?=.*[a-z])(?=.*[A-Z])/.test(value) ||
+      /^(?=.*[a-z])(?=.*\d)/.test(value)
+    ) {
+      setStrengthIndicatorClass('rgb(255, 255, 0)');
+    } else {
+      setStrengthIndicatorClass('rgb(255, 0, 0)');
+    }
+  }
 
   function onSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -129,12 +150,22 @@ export default function UncontrolledForm() {
         )}
       </label>
       <label htmlFor="password">
-        Password:
+        <div className={classes.spaceBetween}>
+          <div>Password</div>
+          <div className={classes.passwordStrenthBlock}>
+            Strength:{' '}
+            <div
+              className={classes.strengthIndicator}
+              style={{ background: strengthIndicatorClass }}
+            ></div>
+          </div>
+        </div>
         <input
           type="password"
           className={classes.formInput}
           id="password"
           ref={passwordRef}
+          onChange={(e) => changeStrengthIndicator(e.target.value)}
         />
         {validationErrors.password ? (
           <div className={classes.errorMessage}>
