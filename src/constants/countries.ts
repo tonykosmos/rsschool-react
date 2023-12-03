@@ -1,4 +1,4 @@
-import { CountriesListItem } from '../Components/Form/types';
+import { CountriesListItem } from '../Components/UncontrolledForm/types';
 
 export const countriesList: CountriesListItem[] = [
   { name: 'Afghanistan', code: 'AF' },

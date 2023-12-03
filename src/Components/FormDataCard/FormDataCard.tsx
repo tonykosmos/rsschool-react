@@ -1,22 +1,16 @@
-import React from 'react';
 import classes from './FormDataCard.module.css';
+import { FormDataCardProps } from './types';
 
-const FormDataCard = () => {
+const FormDataCard = (props: FormDataCardProps) => {
   return (
     <div className={classes.dataviewItem}>
       <div>
-        {/* <h2>{`Name: ${props.name}`}</h2>
-        <p>{`Age: ${props.height}`}</p>
-        <p>{`Mass: ${props.mass}`}</p>
-        <p>{`Birth year: ${props.birth_year}`}</p>
-        <p>{`Hair color: ${props.hair_color}`}</p> */}
-        <h2>{`Name: Felix`}</h2>
-        <p>{`Age: 23`}</p>
-        <p>{`Email: a.kosmovskiy@gmail.com`}</p>
-        <p>{`Password: 123456789`}</p>
-        <p>{`Gender: Male`}</p>
-        <p>{`Password: 123456789`}</p>
-        <p>{`Country: Belarus`}</p>
+        <h2>{`Name: ${props.name}`}</h2>
+        <p>{`Age: ${props.age}`}</p>
+        <p>{`Email: ${props.email}`}</p>
+        <p>{`Password: ${props.password}`}</p>
+        <p>{`Gender: ${props.gender}`}</p>
+        <p>{`Country: ${props.country}`}</p>
       </div>
     </div>
   );

@@ -1,19 +1,19 @@
 import '../styles/App.css';
 import { Link } from 'react-router-dom';
-import FormDataCard from '../Components/FormDataCard/FormDataCard';
+import FormDataCardsList from '../Components/FormDataCardsList/FormDataCardsList';
 
 function Main() {
   return (
     <div className="main-page-container">
       <div className="route-btn-container">
-        <Link to="/form1">
-          <button className="route-btn">Link1</button>
+        <Link to="/uncontrolledForm">
+          <button className="route-btn">Uncontrolled Form</button>
         </Link>
-        <Link to="/form2">
-          <button className="route-btn">Link2</button>
+        <Link to="/reactHooksForm">
+          <button className="route-btn">React Hooks Form</button>
         </Link>
       </div>
-      <FormDataCard />
+      <FormDataCardsList />
     </div>
   );
 }
